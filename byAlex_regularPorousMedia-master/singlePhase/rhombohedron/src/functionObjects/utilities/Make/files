@@ -1,0 +1,5 @@
+averagedU/averagedU.C
+mAveragedGradPDivNu/mAveragedGradPDivNu.C
+rhombohedronStructurePermeability/rhombohedronStructurePermeability.C
+
+LIB = $(FOAM_USER_LIBBIN)/rhombohedronStructureLibutilityFunctionObjects

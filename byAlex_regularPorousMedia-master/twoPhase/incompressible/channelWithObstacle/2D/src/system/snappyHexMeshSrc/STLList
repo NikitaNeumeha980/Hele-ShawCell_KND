@@ -1,0 +1,10 @@
+splittedChannel.stl
+{
+    type triSurfaceMesh;
+    name splittedChannel;
+}
+splittedChannelWalls.stl
+{
+    type triSurfaceMesh;
+    name splittedChannelWalls;
+}

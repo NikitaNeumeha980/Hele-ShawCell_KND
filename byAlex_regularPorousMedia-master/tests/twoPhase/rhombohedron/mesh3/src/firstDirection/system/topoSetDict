@@ -1,0 +1,123 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:                                        |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      topoSetDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+actions
+(
+    {
+        name    AMI11;
+        type    faceSet;
+        action  new;
+        source  patchToFace;
+        sourceInfo
+        {
+            name "cyclicLeftSide";
+        }
+    }
+    {
+        name    AMI12;
+        type    faceSet;
+        action  new;
+        source  patchToFace;
+        sourceInfo
+        {
+            name "cyclicRightSide";
+        }
+    }
+    {
+        name    AMI21;
+        type    faceSet;
+        action  new;
+        source  patchToFace;
+        sourceInfo
+        {
+            name "cyclicOppositeSide";
+        }
+    }
+    {
+        name    AMI22;
+        type    faceSet;
+        action  new;
+        source  patchToFace;
+        sourceInfo
+        {
+            name "cyclicFrontSide";
+        }
+    }
+    {
+        name    AMI31;
+        type    faceSet;
+        action  new;
+        source  patchToFace;
+        sourceInfo
+        {
+            name "cyclicTopSide";
+        }
+    }
+    {
+        name    AMI32;
+        type    faceSet;
+        action  new;
+        source  patchToFace;
+        sourceInfo
+        {
+            name "cyclicBottomSide";
+        }
+    }
+    {
+        name    f0;
+        type    faceSet;
+        action  new;
+        source  patchToFace;
+        sourceInfo
+        {
+            name "skeletonWall";
+        }
+    }
+    {
+        name    c0;
+        type    cellSet;
+        action  new;
+        source  faceToCell;
+        sourceInfo
+        {
+            set     f0;
+            option  any;
+        }
+    }
+    {
+        name    film;
+        type    cellZoneSet;
+        action  new;
+        source  setToCellZone;
+        sourceInfo
+        {
+            set     c0;
+        }
+    }
+//     {
+//         name    film;
+//         type    cellSet;
+//         action  new;
+//         source  zoneToCell;
+//         sourceInfo
+//         {
+//             name film;
+//         }
+//     }
+);
+
+// ************************************************************************* //

@@ -1,0 +1,56 @@
+porousCell
+{
+    level (0 0);
+
+    regions
+    {
+        skeletonWall
+        {
+            level (1 5);
+            patchInfo{type wall;}
+        }
+
+        leftSide
+        {
+            level (5 5);
+            patchInfo{type patch;}
+        }
+
+        rightSide
+        {
+            level (5 5);
+            patchInfo{type patch;}
+        }
+
+        frontSide
+        {
+            level (5 5);
+            patchInfo{type patch;}
+        }
+
+        oppositeSide
+        {
+            level (5 5);
+            patchInfo{type patch;}
+        }
+
+        topSide
+        {
+            level (5 5);
+            patchInfo{type patch;}
+        }
+
+        bottomSide
+        {
+            level (5 5);
+            patchInfo{type patch;}
+        }
+    }
+}
+
+/*leftSide        {level (4 4); patchInfo{type patch;}}
+rightSide       {level (4 4); patchInfo{type patch;}}
+oppositeSide    {level (4 4); patchInfo{type patch;}}
+frontSide       {level (4 4); patchInfo{type patch;}}
+topSide         {level (4 4); patchInfo{type patch;}}
+bottomSide      {level (4 4); patchInfo{type patch;}}*/

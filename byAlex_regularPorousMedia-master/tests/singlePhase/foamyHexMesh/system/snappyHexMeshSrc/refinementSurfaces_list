@@ -1,0 +1,131 @@
+/*porousCell
+{
+    level (4 4);
+
+    regions
+    {
+        skeletonWall
+        {
+            level (4 4);
+            patchInfo{type wall;}
+        }
+
+        leftSide
+        {
+            level (4 4);
+            patchInfo{type patch;}
+        }
+
+        rightSide
+        {
+            level (4 4);
+            patchInfo{type patch;}
+        }
+
+        frontSide
+        {
+            level (4 4);
+            patchInfo{type patch;}
+        }
+
+        oppositeSide
+        {
+            level (4 4);
+            patchInfo{type patch;}
+        }
+
+        topSide
+        {
+            level (4 4);
+            patchInfo{type patch;}
+        }
+
+        bottomSide
+        {
+            level (4 4);
+            patchInfo{type patch;}
+        }
+    }
+}*/
+
+/*skeletonWall
+{
+    level (4 4);
+//     patchInfo
+//     {
+//         type wall;
+//     }
+}
+
+leftSide
+{
+    level (4 4);
+//     patchInfo
+//     {
+//         type patch;
+//     }
+}
+
+rightSide
+{
+    level (4 4);
+//     patchInfo
+//     {
+//         type patch;
+//     }
+}
+
+oppositeSide
+{
+    level (4 4);
+//     patchInfo
+//     {
+//         type patch;
+//     }
+}
+
+frontSide
+{
+    level (4 4);
+//     patchInfo
+//     {
+//         type patch;
+//     }
+}
+
+topSide
+{
+    level (4 4);
+//     patchInfo
+//     {
+//         type patch;
+//     }
+
+}
+
+bottomSide
+{
+    level (4 4);
+//     patchInfo
+//     {
+//         type patch;
+//     }
+}*/
+
+porousCell
+{
+    level (0 0);
+
+    faceZone        porousCell;
+    cellZone        porousCell;
+    cellZoneInside  inside;
+}
+
+backgroundMeshBox
+{
+    level (0 0);
+
+    faceZone        backgroundMeshBox;
+    cellZone        backgroundMeshBox;
+    cellZoneInside  inside;
+}

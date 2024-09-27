@@ -1,0 +1,73 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:                                        |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     interFoam;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+// endTime         0.125;
+
+endTime         0.00125;
+
+deltaT          1e-6;
+
+writeControl    adjustableRunTime;
+
+writeInterval   0.00025;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  10;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable yes;
+
+adjustTimeStep  yes;
+
+maxCo           0.25;
+maxAlphaCo      0.25;
+
+maxDeltaT       $writeInterval;
+
+libs (
+    "libOpenFOAM.so"
+);
+
+functions
+{
+    /*CLI*/
+    #includeFunc            residuals
+    #includeFunc            flowRatePatch(name=cyclicLeftSide)
+    #includeFunc            flowRatePatch(name=cyclicRightSide)
+    #includeFunc            flowRatePatch(name=cyclicOppositeSide)
+    #includeFunc            flowRatePatch(name=cyclicFrontSide)
+    #includeFunc            flowRatePatch(name=cyclicTopSide)
+    #includeFunc            flowRatePatch(name=cyclicBottomSide)
+}
+
+// ************************************************************************* //

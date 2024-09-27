@@ -1,0 +1,10 @@
+lattice.stl
+{
+    type triSurfaceMesh;
+    name lattice;
+}
+latticeWalls.stl
+{
+    type triSurfaceMesh;
+    name latticeWalls;
+}

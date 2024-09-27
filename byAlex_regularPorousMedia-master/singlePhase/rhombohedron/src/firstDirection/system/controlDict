@@ -1,0 +1,89 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:                                        |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application         simpleFoam;
+
+startFrom           latestTime;
+
+startTime           0;
+
+stopAt              endTime;
+
+endTime             400;
+
+deltaT              1;
+
+writeControl        timeStep;
+
+writeInterval       400;
+
+purgeWrite          1;
+
+writeForma          ascii;
+
+writePrecision      10;
+
+writeCompression    no;
+
+timeFormat          general;
+
+timePrecision       6;
+
+runTimeModifiable   true;
+
+libs (
+    "libOpenFOAM.so"
+);
+
+functions
+{
+    /*CLI*/
+    #includeFunc            residuals
+    #includeFunc            flowRatePatch(name=leftSide)
+    #includeFunc            flowRatePatch(name=rightSide)
+    #includeFunc            flowRatePatch(name=cyclicOppositeSide)
+    #includeFunc            flowRatePatch(name=cyclicFrontSide)
+    #includeFunc            flowRatePatch(name=cyclicTopSide)
+    #includeFunc            flowRatePatch(name=cyclicBottomSide)
+    /*CodeStream section*/
+//     #include                "inputOutputMassFlowLUFO"
+//     #include                "permeabilityLUFO"
+//     #include                "mAGradPDivNuAndAULUFO"
+    /*Function objects*/
+    averagedU1
+    {
+        functionObjectLibs  ("rhombohedronStructureLibutilityFunctionObjects.so");
+        type                averagedU;
+    }
+
+    mAveragedGradPDivNu1
+    {
+        functionObjectLibs  ("rhombohedronStructureLibutilityFunctionObjects.so");
+        type                mAveragedGradPDivNu;
+    }
+
+    rhombohedronStructurePermeability1
+    {
+        functionObjectLibs  ("rhombohedronStructureLibutilityFunctionObjects.so");
+        type                rhombohedronStructurePermeability;
+
+        inflowPatches       (leftSide);
+        outflowPatches      (rightSide);
+    }
+}
+
+// ************************************************************************* //

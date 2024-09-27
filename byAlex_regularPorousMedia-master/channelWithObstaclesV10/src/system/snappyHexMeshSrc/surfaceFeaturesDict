@@ -1,0 +1,38 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:                                        |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      surfaceFeaturesDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+surface1
+{
+    surfaces
+    (
+        "model.stl"
+    );
+
+    // Identify a feature when angle between faces < includedAngle
+    includedAngle   130;
+
+    // Do not mark region edges
+    geometricTestOnly       yes;
+
+    // Write options
+
+    // Write features to obj format for postprocessing
+    writeObj                no;
+    verboseObj              no;
+}
+
+
+// ************************************************************************* //

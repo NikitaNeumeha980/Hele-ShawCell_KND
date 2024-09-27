@@ -1,0 +1,20 @@
+// Can work in three modes:
+// - follow : makes sure each processor has all the triangles inside the
+// externally provided bounding box (usually the mesh bounding box).
+// Guarantees minimum amount of communication since mesh-local queries
+// should be answerable without any comms.
+// - independent : surface is decomposed according to the triangle centres
+// so the decomposition might be radically different from the mesh
+// decomposition. Guarantees best memory balance but at the expense of
+// more communication.
+// - frozen : no change
+
+model.stl
+{
+    type triSurfaceMesh;
+    name walls;
+
+//     type distributedTriSurfaceMesh;
+//     name rockSkeletonWalls;
+//     distributionType follow;
+}

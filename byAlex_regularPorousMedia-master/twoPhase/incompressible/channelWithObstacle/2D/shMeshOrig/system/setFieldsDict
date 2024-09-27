@@ -1,0 +1,55 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      setFieldsDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+defaultFieldValues
+(
+    volScalarFieldValue alpha.liquid1    1
+);
+
+regions
+(
+//     sphereToCell
+//     {
+//         centre                  (0 0 0); 
+//         radius                  0;
+//         fieldValues
+//         (
+//             volScalarFieldValue alpha.liquid1    1
+//             volVectorFieldValue U               (0 0 0)
+//         );
+//     }
+    
+    boxToCell
+    {
+        box (-1e6 -1e6 -1e6) (1000 1e6 1e6);
+        fieldValues
+        (
+            volScalarFieldValue alpha.liquid1    0
+        );
+    }
+    zoneToCell
+    {
+        name    viscousLayerZone;
+        fieldValues
+        (
+            volScalarFieldValue alpha.liquid1    0
+        );
+    }
+);
+
+
+// ************************************************************************* //

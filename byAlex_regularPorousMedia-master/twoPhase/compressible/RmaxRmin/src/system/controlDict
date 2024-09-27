@@ -1,0 +1,104 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     compressibleInterFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         0.6;
+
+deltaT          1e-8;
+
+writeControl    adjustableRunTime;
+
+writeInterval   0.0025;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  8;
+
+writeCompression uncompressed;
+
+timeFormat      general;
+
+timePrecision   8;
+
+runTimeModifiable yes;
+
+adjustTimeStep  yes;
+
+maxCo           0.1;
+maxAlphaCo      0.1;
+
+maxDeltaT       1;
+
+libs (
+    "libOpenFOAM.so"
+);
+
+functions
+{
+    /*CodeStream section*/
+    #includeFunc    residuals
+    #includeFunc    flowRatePatch(name=cyclicInlet)
+    #includeFunc    flowRatePatch(name=cyclicOutlet)
+
+    #include    "flowRateLUFO"
+    #include    "averageSaturationLUFO"
+
+    /*Function objects*/
+    massFlowRate1
+    {
+        type            massFlowRate;
+        libs            ("twoPhaseFlowRhombohedronStructureLibutilityFunctionObjects.so");
+
+        writeControl    adjustableRunTime;
+        writeInterval   $writeInterval;
+
+        phi             rhoPhi;
+        patches         (cyclicInlet cyclicOutlet);
+    }
+
+    volumetricFlowRate1
+    {
+        type            volumetricFlowRate;
+        libs            ("twoPhaseFlowRhombohedronStructureLibutilityFunctionObjects.so");
+
+        writeControl    adjustableRunTime;
+        writeInterval   $writeInterval;
+
+        phi             rhoPhi;
+        patches         (cyclicInlet cyclicOutlet);
+    }
+
+    saturation1
+    {
+        type            saturation;
+        libs            ("twoPhaseFlowRhombohedronStructureLibutilityFunctionObjects.so");
+
+        writeControl    adjustableRunTime;
+        writeInterval   $writeInterval;
+	}
+}
+
+// ************************************************************************* //

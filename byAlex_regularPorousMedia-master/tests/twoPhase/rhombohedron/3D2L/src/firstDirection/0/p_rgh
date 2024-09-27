@@ -1,0 +1,96 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p_rgh;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+UTranslationDirectionNbTimes    2;
+unitCellPressureJump            #calc "300.0";
+pressureJump                    #calc "-$UTranslationDirectionNbTimes*$unitCellPressureJump";
+rho0                            1000.0;
+unitCellSize                    1e-3;
+
+unitCellPassageTime                     #calc "$unitCellSize / sqrt(2.0 * abs($unitCellPressureJump) / $rho0)";
+// doubledPassageTime  #calc "2.0 * $passageTime";
+// #codeStream
+// {
+//     code
+//     #{
+//         scalar
+//             pressureJump = readScalar(dict.lookup("pressureJump")),
+//             rho0 = readScalar(dict.lookup("rho0")),
+//             unitCellSize = readScalar(dict.lookup("unitCellSize"));
+// 
+//         os  << (unitCellSize / Foam::sqrt(2.0 * pressureJump / rho0));
+//     #};
+// };
+
+dimensions      [1 -1 -2 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    skeletonWall
+    {
+        type            fixedFluxPressure;
+    }
+
+    cyclicLeftSide
+    {
+        type            uniformJumpAMI;
+        patchType       cyclicAMI;
+        jumpTable       table
+        (
+            (0                      0.0)
+            ($unitCellPassageTime   $pressureJump)
+        );
+
+//         type            fixedJumpAMI;
+//         patchType       cyclicAMI;
+//         jump            uniform -100.0;
+
+        value           $internalField;
+    }
+    cyclicRightSide
+    {
+        type            uniformJumpAMI;
+        patchType       cyclicAMI;
+        jumpTable       constant 0;
+
+//         type            fixedJumpAMI;
+//         patchType       cyclicAMI;
+//         value           $internalField;
+    }
+
+    cyclicOppositeSide
+    {
+        type            cyclicAMI;
+    }
+    cyclicFrontSide
+    {
+        type            cyclicAMI;
+    }
+
+    cyclicTopSide
+    {
+        type            cyclicAMI;
+    }
+    cyclicBottomSide
+    {
+        type            cyclicAMI;
+    }
+}
+
+
+// ************************************************************************* //

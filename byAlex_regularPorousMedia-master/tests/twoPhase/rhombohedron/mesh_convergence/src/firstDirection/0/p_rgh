@@ -1,0 +1,71 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p_rgh;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [1 -1 -2 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    skeletonWall
+    {
+        type            fixedFluxPressure;
+    }
+
+    cyclicLeftSide
+    {
+//         type            uniformJumpAMI;
+//         patchType       cyclicAMI;
+//         jumpTable       constant 50;
+
+        type            fixedJumpAMI;
+        patchType       cyclicAMI;
+        jump            uniform -350.0;
+
+        value           $internalField;
+    }
+    cyclicRightSide
+    {
+//         type            uniformJumpAMI;
+//         patchType       cyclicAMI;
+//         jumpTable       constant 0;
+
+        type            fixedJumpAMI;
+        patchType       cyclicAMI;
+        value           $internalField;
+    }
+
+    cyclicOppositeSide
+    {
+        type            cyclicAMI;
+    }
+    cyclicFrontSide
+    {
+        type            cyclicAMI;
+    }
+
+    cyclicTopSide
+    {
+        type            cyclicAMI;
+    }
+    cyclicBottomSide
+    {
+        type            cyclicAMI;
+    }
+}
+
+
+// ************************************************************************* //

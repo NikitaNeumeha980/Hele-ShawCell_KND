@@ -1,0 +1,5 @@
+splittedChannelWalls
+{
+    level (1 1);
+    patchInfo{type wall;}
+}

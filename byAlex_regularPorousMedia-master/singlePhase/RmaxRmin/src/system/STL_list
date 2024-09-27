@@ -1,0 +1,2 @@
+channelWall.stl         {type triSurfaceMesh;name channelWall;}
+planeChannel3D.stl      {type triSurfaceMesh;name planeChannel3D;}

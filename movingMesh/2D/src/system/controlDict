@@ -1,0 +1,199 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// t_0             0.5;
+
+application     interFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime     0;
+
+// endTime         #codeStream
+// {
+//     code
+//     #{
+//         scalar
+//             t_0 = readScalar(dict.lookup("t_0"));
+// 
+//         os  << (t_0);
+//     #};
+// };
+
+deltaT          1e-7;
+
+writeControl    adjustableRunTime;
+
+writeInterval   1e-1;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  8;
+
+writeCompression uncompressed;
+
+timeFormat      general;
+
+timePrecision   8;
+
+runTimeModifiable yes;
+
+adjustTimeStep  yes;
+
+maxCo           0.25;
+maxAlphaCo      0.1;
+
+maxDeltaT       $writeInterval;
+
+// libs (
+//     "libOpenFOAM.so"
+// );
+//
+functions
+{
+//     /*CodeStream section*/
+    #includeFunc    residuals
+    #includeFunc    patchFlowRate(name=left, patch=left)
+// //     #includeFunc    flowRatePatch(name=bottom)
+    #includeFunc    patchFlowRate(name=right, patch=right)
+// //     #includeFunc    flowRatePatch(name=top)
+//
+// //     #include    "flowRateLUFO"
+// //     #include    "averageSaturationLUFO"
+    volFieldValue1
+    {
+        type            volFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        log             true;
+        writeControl    writeTime;
+        writeFields     true;
+
+        regionType      cellZone;
+        name            residualVolume;
+        operation       volAverage;
+
+//         weightField     alpha.liquid1;
+
+        fields
+        (
+            alpha.liquid1
+        );
+    }
+//     systemCall1
+//     {
+//         type            systemCall;
+//
+//         libs            ("libutilityFunctionObjects.so");
+//
+//         executeCalls
+//         (
+//             "rm processor*/constant/polyMesh/sets/protectedCells"
+//         );
+//
+//         writeCalls
+//         (
+//         );
+//
+//         endCalls
+//         (
+//         );
+//     }
+//
+//     /*Function objects*/
+// //     massFlowRate1
+// //     {
+// //         type            massFlowRate;
+// //         libs            ("libuserUtilityFunctionObjects.so");
+// //
+// //         writeControl    adjustableRunTime;
+// //         writeInterval   $writeInterval;
+// //
+// //         phi             rhoPhi;
+// //         patches         (inlet outlet);
+// //     }
+// //
+// //     volumetricFlowRate1
+// //     {
+// //         type            volumetricFlowRate;
+// //         libs            ("libuserUtilityFunctionObjects.so");
+// //
+// //         writeControl    adjustableRunTime;
+// //         writeInterval   $writeInterval;
+// //
+// //         phi             rhoPhi;
+// //         patches         (inlet outlet);
+// //     }
+// //
+// //     saturation1
+// //     {
+// //         type            saturation;
+// //         libs            ("libuserUtilityFunctionObjects.so");
+// //
+// //         writeControl    adjustableRunTime;
+// //         writeInterval   $writeInterval;
+// // 	}
+//     /*timeVsFile*/
+// //     controlDictFileUpdate
+// //     {
+// //         type                timeActivatedFileUpdate;
+// //         functionObjectLibs  ("libutilityFunctionObjects.so");
+// //         writeControl        adjustableRunTime;
+// //         writeInterval       1;
+// //         fileToUpdate        "$FOAM_CASE/system/controlDict";
+// //
+// //         timeVsFile
+// //         (
+// //             ($t_0   "$FOAM_CASE/system/src/controlDict.1")
+// //         );
+// //     }
+//
+// //     fvSolutionFileUpdate
+// //     {
+// //         type                timeActivatedFileUpdate;
+// //         functionObjectLibs  ("libutilityFunctionObjects.so");
+// //         writeControl        adjustableRunTime;
+// //         writeInterval       1;
+// //         fileToUpdate        "$FOAM_CASE/system/fvSolution";
+// //         timeVsFile
+// //         (
+// //             ($t_0   "$FOAM_CASE/system/src/fvSolution.1")
+// //         );
+// //     }
+//
+// //     transportPropertiesFileUpdate
+// //     {
+// //         type                timeActivatedFileUpdate;
+// //         functionObjectLibs  ("libutilityFunctionObjects.so");
+// //         writeControl        adjustableRunTime;
+// //         writeInterval       1;
+// //         fileToUpdate        "$FOAM_CASE/constant/transportProperties";
+// //
+// //         timeVsFile
+// //         (
+// //             ($t_0   "$FOAM_CASE/constant/src/transportProperties.1")
+// //         );
+// //     }
+}
+
+// ************************************************************************* //

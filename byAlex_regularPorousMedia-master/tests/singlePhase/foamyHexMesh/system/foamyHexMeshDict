@@ -1,0 +1,329 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+    class           dictionary;
+    object          foamyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Include defaults parameters from master dictionary
+#includeEtc "caseDicts/mesh/generation/foamyHexMeshDict"
+
+geometry
+{
+    #include "STL_list"
+}
+
+surfaceConformation
+{
+    #include "centerOfMass"
+
+    featurePointControls
+    {
+        specialiseFeaturePoints off;
+        edgeAiming              on;
+        guardFeaturePoints      off;
+        snapFeaturePoints       off;
+        circulateEdges          off;
+    }
+
+    // Geometry to mesh to
+    geometryToConformTo
+    {
+        porousCell
+        {
+            featureMethod           extractFeatures;
+            includedAngle           140;
+
+            regions
+            {
+                skeletonWall
+                {
+                    patchInfo
+                    {
+                        type wall;
+                    }
+                }
+
+                leftSide
+                {
+                    patchInfo
+                    {
+                        type patch;
+                    }
+                }
+
+                rightSide
+                {
+                    patchInfo
+                    {
+                        type patch;
+                    }
+                }
+
+                frontSide
+                {
+                    patchInfo
+                    {
+                        type patch;
+                    }
+                }
+
+                oppositeSide
+                {
+                    patchInfo
+                    {
+                        type patch;
+                    }
+                }
+
+                topSide
+                {
+                    patchInfo
+                    {
+                        type patch;
+                    }
+                }
+
+                bottomSide
+                {
+                    patchInfo
+                    {
+                        type patch;
+                    }
+                }
+            }
+        }
+    }
+
+    additionalFeatures
+    {
+//         coneSphereIntersection
+//         {
+//             featureMethod           extendedFeatureEdgeMesh;
+//             extendedFeatureEdgeMesh "cone_orient_sphere_orient_intersection.extendedFeatureEdgeMesh";
+//         }
+    }
+}
+
+initialPoints
+{
+    initialPointsMethod         autoDensity;
+
+    autoDensityCoeffs
+    {
+        minCellSizeLimit        0.1;
+        minLevels               4;
+        maxSizeRatio            3.0;
+        sampleResolution        4;
+        surfaceSampleResolution 5;
+    }
+}
+
+motionControl
+{
+    defaultCellSize         0.05;
+
+    minimumCellSizeCoeff    0;
+
+    // For background cell size and alignment grid
+    maxSmoothingIterations  100;
+
+    maxRefinementIterations 0;
+
+    shapeControlFunctions
+    {
+        porousCell
+        {
+            type                        searchableSurfaceControl;
+            priority                    1;
+            mode                        inside;
+
+            surfaceCellSizeFunction     uniformValue;
+            uniformValueCoeffs
+            {
+                surfaceCellSizeCoeff    0.2;
+            }
+
+            cellSizeFunction            linearDistance;
+            linearDistanceCoeffs
+            {
+                distanceCellSizeCoeff   1;
+                distanceCoeff           2;
+            }
+
+            regions
+            {
+                leftSide
+                {
+                    type                        searchableSurfaceControl;
+                    priority                    2;
+                    mode                        inside;
+
+                    surfaceCellSizeFunction     uniformValue;
+                    uniformValueCoeffs
+                    {
+                        surfaceCellSizeCoeff    0.5;
+                    }
+
+                    cellSizeFunction            surfaceOffsetLinearDistance;
+                    surfaceOffsetLinearDistanceCoeffs
+                    {
+                        distanceCellSizeCoeff   1;
+                        surfaceOffsetCoeff      2;
+                        linearDistanceCoeff     2;
+                    }
+                }
+
+                rightSide
+                {
+                    type                        searchableSurfaceControl;
+                    priority                    2;
+                    mode                        inside;
+
+                    surfaceCellSizeFunction     uniformValue;
+                    uniformValueCoeffs
+                    {
+                        surfaceCellSizeCoeff    0.5;
+                    }
+
+                    cellSizeFunction            surfaceOffsetLinearDistance;
+                    surfaceOffsetLinearDistanceCoeffs
+                    {
+                        distanceCellSizeCoeff   1;
+                        surfaceOffsetCoeff      2;
+                        linearDistanceCoeff     2;
+                    }
+                }
+
+                frontSide
+                {
+                    type                        searchableSurfaceControl;
+                    priority                    2;
+                    mode                        inside;
+
+                    surfaceCellSizeFunction     uniformValue;
+                    uniformValueCoeffs
+                    {
+                        surfaceCellSizeCoeff    0.5;
+                    }
+
+                    cellSizeFunction            surfaceOffsetLinearDistance;
+                    surfaceOffsetLinearDistanceCoeffs
+                    {
+                        distanceCellSizeCoeff   1;
+                        surfaceOffsetCoeff      2;
+                        linearDistanceCoeff     2;
+                    }
+                }
+
+                oppositeSide
+                {
+                    type                        searchableSurfaceControl;
+                    priority                    2;
+                    mode                        inside;
+
+                    surfaceCellSizeFunction     uniformValue;
+                    uniformValueCoeffs
+                    {
+                        surfaceCellSizeCoeff    0.5;
+                    }
+
+                    cellSizeFunction            surfaceOffsetLinearDistance;
+                    surfaceOffsetLinearDistanceCoeffs
+                    {
+                        distanceCellSizeCoeff   1;
+                        surfaceOffsetCoeff      2;
+                        linearDistanceCoeff     2;
+                    }
+                }
+
+                topSide
+                {
+                    type                        searchableSurfaceControl;
+                    priority                    2;
+                    mode                        inside;
+
+                    surfaceCellSizeFunction     uniformValue;
+                    uniformValueCoeffs
+                    {
+                        surfaceCellSizeCoeff    0.5;
+                    }
+
+                    cellSizeFunction            surfaceOffsetLinearDistance;
+                    surfaceOffsetLinearDistanceCoeffs
+                    {
+                        distanceCellSizeCoeff   1;
+                        surfaceOffsetCoeff      2;
+                        linearDistanceCoeff     2;
+                    }
+                }
+
+                bottomSide
+                {
+                    type                        searchableSurfaceControl;
+                    priority                    2;
+                    mode                        inside;
+
+                    surfaceCellSizeFunction     uniformValue;
+                    uniformValueCoeffs
+                    {
+                        surfaceCellSizeCoeff    0.5;
+                    }
+
+                    cellSizeFunction            surfaceOffsetLinearDistance;
+                    surfaceOffsetLinearDistanceCoeffs
+                    {
+                        distanceCellSizeCoeff   1;
+                        surfaceOffsetCoeff      2;
+                        linearDistanceCoeff     2;
+                    }
+                }
+            }
+        }
+    }
+
+//     adaptiveLinearCoeffs
+//     {
+//         relaxationStart         1.0;
+//         relaxationEnd           0.0;
+//     }
+
+    // Output lots and lots of .obj files
+    objOutput                   no;
+
+    // Timing and memory usage.
+    timeChecks                  no;
+}
+
+// After simulation, when converting to polyMesh, filter out small faces/edges.
+// Do not change. See cvControls.H
+polyMeshFiltering
+{
+    filterEdges                 on;
+    filterFaces                 on;
+    writeTetDualMesh            false;
+}
+
+backgroundMeshDecomposition
+{
+    minLevels           1;
+    sampleResolution    4;
+    spanScale           5;
+    maxCellWeightCoeff  10;
+}
+
+meshQualityControls
+{
+    #include "meshQualityDict"
+}
+
+// ************************************************************************* //

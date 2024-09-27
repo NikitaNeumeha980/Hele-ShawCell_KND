@@ -1,0 +1,83 @@
+skeletonWall
+{
+    featureMethod   extractFeatures;
+    includedAngle   140;
+
+    patchInfo
+    {
+        type        wall;
+        inGroups    (porousCell);
+    }
+}
+
+leftSide
+{
+    featureMethod   extractFeatures;
+    includedAngle   140;
+
+    patchInfo
+    {
+        type        patch;
+        inGroups    (porousCell);
+    }
+}
+
+rightSide
+{
+    featureMethod   extractFeatures;
+    includedAngle   140;
+
+    patchInfo
+    {
+        type        patch;
+        inGroups    (porousCell);
+    }
+}
+
+oppositeSide
+{
+    featureMethod   extractFeatures;
+    includedAngle   140;
+
+    patchInfo
+    {
+        type        patch;
+        inGroups    (porousCell);
+    }
+}
+
+frontSide
+{
+    featureMethod   extractFeatures;
+    includedAngle   140;
+
+    patchInfo
+    {
+        type        patch;
+        inGroups    (porousCell);
+    }
+}
+
+topSide
+{
+    featureMethod   extractFeatures;
+    includedAngle   140;
+
+    patchInfo
+    {
+        type        patch;
+        inGroups    (porousCell);
+    }
+}
+
+bottomSide
+{
+    featureMethod   extractFeatures;
+    includedAngle   140;
+
+    patchInfo
+    {
+        type        patch;
+        inGroups    (porousCell);
+    }
+}

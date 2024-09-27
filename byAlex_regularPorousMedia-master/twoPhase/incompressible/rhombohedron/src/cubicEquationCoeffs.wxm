@@ -1,0 +1,59 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 18.02.0 ] */
+/* [wxMaxima: input   start ] */
+kill(all)$
+
+eqn:
+    expand(
+        (
+            2 - 3 * IP^2 * (3 - IP)
+           -3
+           *(
+                1 - 2 * (1 - IP) * sin(%theta / 2)
+            )^2
+           *(
+                3 - (1 - 2 * (1 - IP) * sin(%theta / 2))
+            )
+        )
+        -
+        F * (1 - IP)^3
+    )$
+
+a0:
+    coeff(eqn, IP, 0);
+a1:
+    coeff(eqn, IP, 1);
+a2:
+    coeff(eqn, IP, 2);
+a3:
+    coeff(eqn, IP, 3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+
+eqn:
+    expand(
+        (
+            2
+           -3*IP^2*(3 - IP)
+        )
+        -
+        F*(1 - IP)^3
+    )$
+
+a0:
+    coeff(eqn, IP, 0);
+a1:
+    coeff(eqn, IP, 1);
+a2:
+    coeff(eqn, IP, 2);
+a3:
+    coeff(eqn, IP, 3);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 18.02.0"$

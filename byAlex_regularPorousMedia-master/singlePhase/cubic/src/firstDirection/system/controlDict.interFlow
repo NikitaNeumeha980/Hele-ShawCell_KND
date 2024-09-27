@@ -1,0 +1,150 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:                                        |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+unitCellPassageNbTimes  20;
+unitCellPressureJump    #calc "600.0";
+rho0                    1000.0;
+unitCellSize            1e-3;
+
+unitCellPassageTime     #calc "$unitCellSize / sqrt(2.0 * abs($unitCellPressureJump) / $rho0)";
+// #codeStream
+// {
+//     code
+//     #{
+//         scalar
+//             pressureJump = readScalar(dict.lookup("pressureJump")),
+//             rho0 = readScalar(dict.lookup("rho0")),
+//             unitCellSize = readScalar(dict.lookup("unitCellSize"));
+// 
+//         os  << (unitCellSize / Foam::sqrt(2.0 * pressureJump / rho0));
+//     #};
+// };
+
+application     interFoam;
+
+// startFrom       startTime;
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         #calc "($unitCellPassageNbTimes + 1) * $unitCellPassageTime";
+// #codeStream
+// {
+//     code
+//     #{
+//         scalar
+//             passageNumber = readScalar(dict.lookup("passageNumber")),
+//             passageTime = readScalar(dict.lookup("passageTime"));
+// 
+//         os  << ((passageNumber + 1) * passageTime);
+//     #};
+// };
+
+deltaT          1e-6;
+
+writeControl    adjustableRunTime;
+
+writeInterval   #calc "0.025 * $unitCellPassageTime";
+// #codeStream
+// {
+//     code
+//     #{
+//         scalar passageTime = readScalar(dict.lookup("passageTime"));
+// 
+//         os  << (0.05 * passageTime);
+//     #};
+// };
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  8;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable yes;
+
+adjustTimeStep  yes;
+
+maxCo           0.2;
+maxAlphaCo      0.1;
+
+maxDeltaT       $writeInterval;
+
+libs (
+    "libOpenFOAM.so"
+);
+
+functions
+{
+    /*CLI*/
+    #includeFunc        residuals
+    #includeFunc        flowRatePatch(name=cyclicLeftSide)
+    #includeFunc        flowRatePatch(name=cyclicRightSide)
+    #includeFunc        flowRatePatch(name=cyclicOppositeSide)
+    #includeFunc        flowRatePatch(name=cyclicFrontSide)
+    #includeFunc        flowRatePatch(name=cyclicTopSide)
+    #includeFunc        flowRatePatch(name=cyclicBottomSide)
+    /*Function objects*/
+    massFlowRate1
+    {
+        type            massFlowRate;
+        libs            ("twoPhaseFlowRhombohedronStructureLibutilityFunctionObjects.so");
+
+//         writeControl    adjustableRunTime;
+//         writeInterval   $writeInterval;
+        writeControl    timeStep;
+        writeInterval   10;
+
+        phi             phi;
+        patches         (cyclicLeftSide cyclicRightSide cyclicOppositeSide cyclicFrontSide cyclicTopSide cyclicBottomSide);
+    }
+
+    volumetricFlowRate1
+    {
+        type            volumetricFlowRate;
+        libs            ("twoPhaseFlowRhombohedronStructureLibutilityFunctionObjects.so");
+
+//         writeControl    adjustableRunTime;
+//         writeInterval   $writeInterval;
+        writeControl    timeStep;
+        writeInterval   10;
+
+        phi             phi;
+        patches         (cyclicLeftSide cyclicRightSide cyclicOppositeSide cyclicFrontSide cyclicTopSide cyclicBottomSide);
+    }
+
+    saturation1
+    {
+        type            saturation;
+        libs            ("twoPhaseFlowRhombohedronStructureLibutilityFunctionObjects.so");
+
+//         writeControl    adjustableRunTime;
+//         writeInterval   $writeInterval;
+        writeControl    timeStep;
+        writeInterval   10;
+    }
+}
+
+// ************************************************************************* //

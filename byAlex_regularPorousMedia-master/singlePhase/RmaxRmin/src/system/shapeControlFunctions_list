@@ -1,0 +1,53 @@
+sphere
+{
+    type                        searchableSurfaceControl;
+    priority                    2;
+    mode                        inside;
+
+    surfaceCellSizeFunction     uniformValue;
+    uniformValueCoeffs
+    {
+        surfaceCellSizeCoeff    0.25;
+    }
+
+    cellSizeFunction            linearDistance;
+    linearDistanceCoeffs
+    {
+        distanceCellSizeCoeff   1;
+        distanceCoeff           2;
+    }
+}
+
+cone
+{
+    type                searchableSurfaceControl;
+    priority            1;
+    mode                bothSides;
+
+    surfaceCellSizeFunction uniformValue;
+    uniformValueCoeffs
+    {
+        surfaceCellSizeCoeff 1;
+    }
+
+    cellSizeFunction        uniform;
+    uniformCoeffs
+    {}
+}
+
+domain
+{
+    type                searchableSurfaceControl;
+    priority            1;
+    mode                bothSides;
+
+    surfaceCellSizeFunction uniformValue;
+    uniformValueCoeffs
+    {
+        surfaceCellSizeCoeff 1;
+    }
+
+    cellSizeFunction        uniform;
+    uniformCoeffs
+    {}
+}

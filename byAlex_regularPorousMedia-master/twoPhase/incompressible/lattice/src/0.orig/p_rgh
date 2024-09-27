@@ -1,0 +1,150 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      p_rgh;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [ 1 -1 -2 0 0 0 0 ];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    #includeEtc "caseDicts/setConstraintTypes"
+
+    empty_1
+    {
+        type            empty;
+    }
+
+    empty_2
+    {
+        type            empty;
+    }
+
+    left
+    {
+        type            fixedFluxPressure;
+        value           uniform 0;
+
+//         type            fixedValue;
+//         value           $internalField;
+
+//         type            totalPressure;
+//         phi             rhoPhi;
+//         p0              $internalField;
+//         value           $internalField;
+    }
+
+    right
+    {
+        type            fixedFluxPressure;
+        value           uniform 0;
+
+//         type            uniformFixedValue;
+//         uniformValue    table
+//         (
+//             (0          1e5)
+//             (0.1        1e5)
+//             (0.11       100010)
+//             (10.0       100010)
+//         );
+
+//         type            uniformTotalPressure;
+//         U               U;
+//         phi             rhoPhi;
+//         rho             rho;
+// 
+//         p0              table
+//         (
+//             (0          1e5)
+//             (0.1        1e5)
+//             (0.11       100010)
+//             (10.0       100010)
+//         );
+
+//         type            codedFixedValue;
+//         value           $internalField;
+//         redirectType    perturbationOnInfOpen;
+
+//         type            totalPressure;
+//         phi             rhoPhi;
+//         p0              100100;
+//         value           100100;
+    }
+
+    top
+    {
+        type            fixedFluxPressure;
+        value           uniform 0;
+
+//         type            uniformFixedValue;
+//         uniformValue    table
+//         (
+//             (0          1e5)
+//             (0.1        1e5)
+//             (0.11       100010)
+//             (10.0       100010)
+//         );
+
+//         type            fixedValue;
+//         value           $internalField;
+
+//         type            totalPressure;
+//         phi             rhoPhi;
+//         p0              $internalField;
+//         value           $internalField;
+    }
+
+    bottom
+    {
+        type            fixedFluxPressure;
+        value           uniform 0;
+
+//         type            uniformFixedValue;
+//         uniformValue    table
+//         (
+//             (0          1e5)
+//             (0.1        1e5)
+//             (0.11       100010)
+//             (10.0       100010)
+//         );
+
+//         type            uniformTotalPressure;
+//         p0              table
+//         (
+//             (0          1e5)
+//             (0.1        1e5)
+//             (0.11       100100)
+//             (10.0       100100)
+//         );
+
+//         type            codedFixedValue;
+//         value           $internalField;
+//         redirectType    perturbationOnInfOpen;
+//         type            totalPressure;
+//         phi             rhoPhi;
+//         p0              100100;
+//         value           100100;
+    }
+
+    latticeWalls
+    {
+        type            fixedFluxPressure;
+        value           uniform 0;
+    }
+}
+
+
+// ************************************************************************* //

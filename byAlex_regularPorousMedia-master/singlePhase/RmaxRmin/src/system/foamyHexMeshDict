@@ -1,0 +1,102 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+    class           dictionary;
+    object          foamyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Include defaults parameters from master dictionary
+#includeEtc "caseDicts/foamyHexMeshDict"
+
+geometry
+{
+    #include "STL_list"
+}
+
+
+surfaceConformation
+{
+    #include "centerOfMass"
+
+    featurePointControls
+    {
+        specialiseFeaturePoints off;
+        edgeAiming              off;
+        guardFeaturePoints      off;
+        snapFeaturePoints       off;
+        circulateEdges          off;
+    }
+
+    // Geometry to mesh to
+    geometryToConformTo
+    {
+        #include "geometryToConformTo_list"
+    }
+}
+
+
+initialPoints
+{
+    initialPointsMethod         autoDensity;
+
+    autoDensityCoeffs
+    {
+        minCellSizeLimit        0.1;
+        minLevels               4;
+        maxSizeRatio            5.0;
+        sampleResolution        3;
+        surfaceSampleResolution 3;
+    }
+}
+
+
+motionControl
+{
+    defaultCellSize         0.1;
+
+    minimumCellSizeCoeff    0;
+
+    // For background cell size and alignment grid
+    maxSmoothingIterations  100;
+
+    maxRefinementIterations 0;
+
+    shapeControlFunctions
+    {
+        #include "shapeControlFunctions_list"
+    }
+
+    // Output lots and lots of .obj files
+    objOutput                   no;
+
+    // Timing and memory usage.
+    timeChecks                  no;
+}
+
+
+// After simulation, when converting to polyMesh, filter out small faces/edges.
+// Do not change. See cvControls.H
+polyMeshFiltering
+{
+    filterEdges                 on;
+    filterFaces                 on;
+    writeTetDualMesh            false;
+}
+
+
+meshQualityControls
+{
+    #include "meshQualityDict"
+}
+
+
+// ************************************************************************* //

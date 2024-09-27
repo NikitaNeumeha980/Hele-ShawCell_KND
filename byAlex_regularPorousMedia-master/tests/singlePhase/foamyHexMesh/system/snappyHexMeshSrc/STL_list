@@ -1,0 +1,97 @@
+/*porousCell.stl
+{
+    type triSurfaceMesh;
+    name porousCell;
+
+    regions
+    {
+        skeletonWall
+        {
+            name skeletonWall;
+        }
+
+        leftSide
+        {
+            name leftSide;
+        }
+
+        rightSide
+        {
+            name rightSide;
+        }
+
+        frontSide
+        {
+            name frontSide;
+        }
+
+        oppositeSide
+        {
+            name oppositeSide;
+        }        
+
+        topSide
+        {
+            name topSide;
+        }
+
+        bottomSide
+        {
+            name bottomSide;
+        }
+    }
+}*/
+
+/*skeletonWall.stl
+{
+    type triSurfaceMesh;
+    name skeletonWall;
+}
+
+leftSide.stl
+{
+    type triSurfaceMesh;
+    name leftSide;
+}
+
+rightSide.stl
+{
+    type triSurfaceMesh;
+    name rightSide;
+}
+
+oppositeSide.stl
+{
+    type triSurfaceMesh;
+    name oppositeSide;
+}
+
+frontSide.stl
+{
+    type triSurfaceMesh;
+    name frontSide;
+}
+
+topSide.stl
+{
+    type triSurfaceMesh;
+    name topSide;
+}
+
+bottomSide.stl
+{
+    type triSurfaceMesh;
+    name bottomSide;
+}*/
+
+porousCell
+{
+    type triSurfaceMesh;
+    file "porousCell.stl";
+}
+
+backgroundMeshBox
+{
+    type triSurfaceMesh;
+    file "backgroundMeshBox.stl";
+}
