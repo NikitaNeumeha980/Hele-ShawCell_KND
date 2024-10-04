@@ -24,7 +24,7 @@ channel1MiddleWidth_ = 50 # upside
 channel2InOutWidth_ = 100
 channel2MiddleWidth_ = 150 #downside
 depth_ = 1000
-blobSeparatingDistance_ = 100
+blobSeparatingDistance_ = 0
 blobRadius_ = 100
 
 slopeAngle_ = 0.0*math.pi/180.0

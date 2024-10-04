@@ -46,7 +46,7 @@ boundaryField
     splittedChannelWalls
     {
         type            constantAlphaContactAngle;
-        theta0          110;
+        theta0          140;
         limit           gradient;
         value           uniform 0;
     }

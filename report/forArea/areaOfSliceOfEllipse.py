@@ -12,9 +12,9 @@ drainageWidth_ = 200
 channel1InOutWidth_ = 100
 channel1MiddleWidth_ = 50 # upside
 channel2InOutWidth_ = 100
-channel2MiddleWidth_ = 150 #downside
+channel2MiddleWidth_ = 140 #downside
 depth_ = 1000
-blobSeparatingDistance_ = 100
+blobSeparatingDistance_ = 0
 blobRadius_ = 100
 
 slopeAngle_ = 0.0*math.pi/180.0
@@ -68,12 +68,23 @@ S_ellips1_phi = 0.5 * np.pi * a1_ * b1_ - \
 
 print("S1 = ",S_ellips1_phi)
 
+S_ellips2_phi = 0.5 * np.pi * a2_ * b2_ - \
+    0.5 * np.pi * blobRadius_**2 - \
+    (np.sqrt((blobRadius_ + channel2InOutWidth_)**2 - (drainageWidth_ / 2)**2) * drainageWidth_ / 2) / 2 + b2_/(a2_*2) * \
+    (   
+        (a2_**2 * np.pi / 2) - \
+        (np.sqrt((blobRadius_ + channel2InOutWidth_)**2 - (drainageWidth_ / 2)**2) * \
+        np.sqrt(a2_**2 - np.sqrt((blobRadius_ + channel2InOutWidth_)**2 - (drainageWidth_ / 2)**2)) + 
+        a2_**2 * np.arcsin(np.sqrt((blobRadius_ + channel2InOutWidth_)**2 - (drainageWidth_ / 2)**2) / a2_))
+    ) - \
+    (blobRadius_**2 * 0.5 * np.arccos(round((a2_/b2_ * np.sqrt(b2_**2 - drainageWidth_**2 / 4)) / (channel2InOutWidth_ + blobRadius_), 1)))
+
+print("S1 = ",S_ellips2_phi)
+
+print("s1/s2= ", S_ellips1_phi/S_ellips2_phi )
 
 
-
-
-
-
+print((a2_/b2_ * np.sqrt(b2_**2 - drainageWidth_**2 / 4)) / (channel2InOutWidth_ + blobRadius_))
 
 
 # b1FromS1 = S_ellips1_phi * 2 * a1_ / (
